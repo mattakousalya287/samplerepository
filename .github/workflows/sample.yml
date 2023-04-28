@@ -1,0 +1,26 @@
+name: Kousalya workflow
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "hello"
+        type: string
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: secrets
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to server
+        run: ssh user@server "bash deploy.sh"
